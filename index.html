@@ -132,21 +132,43 @@
     position: absolute; inset: 0;
     background: linear-gradient(170deg, #fde8b0 0%, #f5c060 20%, #e08a30 40%, #8b3820 65%, #3a1a10 85%, #1a0e08 100%);
   }
+  /* The photo is a 4:3 shot of Madison & Hilliard looking west at sunset.
+     We zoom into the upper part (sky, wires, signal pole) and let the
+     storefronts along the bottom fall into silhouette under the overlay,
+     so the image reads as "the street at dusk" rather than any one business. */
   .hero-photo {
-    position: absolute; inset: 0;
+    position: absolute; inset: -6%;
     background-image: url('images/madison-dusk.jpg');
     background-size: cover;
-    background-position: center 60%;
+    background-position: center 22%;
+    transform: scale(1.18);
+    transform-origin: 50% 20%;
+    filter: saturate(1.15) contrast(1.05);
   }
+  /* Soft blur on the lower band where signage sits */
+  .hero-blur {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 55%;
+    background-image: url('images/madison-dusk.jpg');
+    background-size: cover;
+    background-position: center 22%;
+    background-attachment: scroll;
+    filter: blur(6px) saturate(1.1);
+    -webkit-mask-image: linear-gradient(to top, black 40%, transparent 100%);
+    mask-image: linear-gradient(to top, black 40%, transparent 100%);
+    opacity: 0.9;
+    display: none; /* enabled by JS only once the photo exists */
+  }
+  .hero.has-photo .hero-blur { display: block; }
   .hero-overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(
-      to top,
-      rgba(20,14,8,0.88) 0%,
-      rgba(20,14,8,0.55) 40%,
-      rgba(20,14,8,0.15) 75%,
-      rgba(20,14,8,0.25) 100%
-    );
+    background:
+      linear-gradient(to top,
+        rgba(18,12,8,0.96) 0%,
+        rgba(18,12,8,0.82) 28%,
+        rgba(40,22,10,0.45) 55%,
+        rgba(40,22,10,0.12) 80%,
+        rgba(20,14,8,0.25) 100%),
+      radial-gradient(ellipse at 50% 62%, rgba(255,170,60,0.18) 0%, transparent 55%);
   }
 
   .hero-content {
@@ -482,6 +504,7 @@
 <section class="hero" id="hero">
   <div class="hero-sky"></div>
   <div class="hero-photo" role="img" aria-label="Madison Avenue in Lakewood, Ohio at dusk"></div>
+  <div class="hero-blur" aria-hidden="true"></div>
   <div class="hero-overlay"></div>
 
   <div class="hero-content">
@@ -624,10 +647,10 @@
         <h3>Get in touch</h3>
         <p>Tell us about your business and we'll follow up with membership details, dues, and the next meeting date.</p>
         <!-- TODO: confirm the contact address before launch -->
-        <a href="mailto:info@uptownlakewood.org?subject=ULBA%20membership" class="btn-primary">Email the Alliance</a>
+        <a href="mailto:CONTACT-EMAIL-TBD?subject=ULBA%20membership" class="btn-primary">Email the Alliance</a>
         <div class="contact-line">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <a href="mailto:info@uptownlakewood.org">info@uptownlakewood.org</a>
+          <a href="mailto:CONTACT-EMAIL-TBD">contact address coming soon</a>
         </div>
       </div>
     </div>
@@ -653,7 +676,7 @@
         <li><a href="#about">About ULBA</a></li>
         <li><a href="#trick-or-treat">Trick or Treat</a></li>
         <li><a href="#join">Join</a></li>
-        <li><a href="mailto:info@uptownlakewood.org">Contact</a></li>
+        <li><a href="#join">Contact</a></li>
       </ul>
     </div>
   </div>
@@ -663,6 +686,11 @@
 </footer>
 
 <script>
+// Mark the hero once the photo is actually available
+const heroImg = new Image();
+heroImg.onload = () => document.getElementById('hero').classList.add('has-photo');
+heroImg.src = 'images/madison-dusk.jpg';
+
 // Scroll-aware nav
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => {
