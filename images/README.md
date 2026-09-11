@@ -1,2 +1,2 @@
-Drop the hero photo here as `madison-dusk.jpg` (landscape, ideally 2000px+ wide, under ~600KB).
-The hero in `index.html` references `images/madison-dusk.jpg` and falls back to a gradient sky until the file exists.
+- `madison-dusk.jpg` — original photo of Madison Ave at Hilliard, looking west at sunset (source, not loaded by the page).
+- `madison-dusk-hero.jpg` — hero crop used by `index.html`: right two-thirds of the frame, from the signal mast arm down to the storefront rooflines, 2000px wide. Regenerate from the original if the crop needs to change.
