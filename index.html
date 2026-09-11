@@ -7,7 +7,7 @@
 <meta name="description" content="The Uptown Lakewood Business Alliance connects businesses and community on the west end of Madison Avenue in Lakewood, Ohio. Trick or Treat on Madison Avenue: Tuesday, October 20, 2026, 5:00 to 7:30 pm.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Creepster&display=swap">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -127,35 +127,29 @@
     padding-top: 72px;
     color: var(--cream);
   }
-  /* Fallback sky shown until images/madison-dusk.jpg is added */
+  /* Fallback sky shown until the hero photo loads */
   .hero-sky {
     position: absolute; inset: 0;
     background: linear-gradient(170deg, #fde8b0 0%, #f5c060 20%, #e08a30 40%, #8b3820 65%, #3a1a10 85%, #1a0e08 100%);
   }
-  /* The photo is a 4:3 shot of Madison & Hilliard looking west at sunset.
-     We zoom into the upper part (sky, wires, signal pole) and let the
-     storefronts along the bottom fall into silhouette under the overlay,
-     so the image reads as "the street at dusk" rather than any one business. */
+  /* images/madison-dusk-hero.jpg is a pre-cropped cut of the Madison & Hilliard
+     photo: signal mast arm and wires against the sunset, storefronts along the
+     bottom edge. The overlay below drops that bottom band into silhouette. */
   .hero-photo {
-    position: absolute; inset: -6%;
-    background-image: url('images/madison-dusk.jpg');
+    position: absolute; inset: 0;
+    background-image: url('images/madison-dusk-hero.jpg');
     background-size: cover;
-    background-position: center 22%;
-    transform: scale(1.18);
-    transform-origin: 50% 20%;
-    filter: saturate(1.15) contrast(1.05);
+    background-position: center 40%;
+    filter: saturate(1.12) contrast(1.04);
   }
-  /* Soft blur on the lower band where signage sits */
   .hero-blur {
-    position: absolute; left: 0; right: 0; bottom: 0; height: 55%;
-    background-image: url('images/madison-dusk.jpg');
+    position: absolute; left: 0; right: 0; bottom: 0; height: 42%;
+    background-image: url('images/madison-dusk-hero.jpg');
     background-size: cover;
-    background-position: center 22%;
-    background-attachment: scroll;
-    filter: blur(6px) saturate(1.1);
-    -webkit-mask-image: linear-gradient(to top, black 40%, transparent 100%);
-    mask-image: linear-gradient(to top, black 40%, transparent 100%);
-    opacity: 0.9;
+    background-position: center 40%;
+    filter: blur(7px) saturate(1.1);
+    -webkit-mask-image: linear-gradient(to top, black 45%, transparent 100%);
+    mask-image: linear-gradient(to top, black 45%, transparent 100%);
     display: none; /* enabled by JS only once the photo exists */
   }
   .hero.has-photo .hero-blur { display: block; }
@@ -164,11 +158,11 @@
     background:
       linear-gradient(to top,
         rgba(18,12,8,0.96) 0%,
-        rgba(18,12,8,0.82) 28%,
-        rgba(40,22,10,0.45) 55%,
-        rgba(40,22,10,0.12) 80%,
-        rgba(20,14,8,0.25) 100%),
-      radial-gradient(ellipse at 50% 62%, rgba(255,170,60,0.18) 0%, transparent 55%);
+        rgba(24,14,8,0.8) 22%,
+        rgba(70,36,12,0.32) 48%,
+        rgba(70,36,12,0.06) 72%,
+        rgba(20,14,8,0.28) 100%),
+      radial-gradient(ellipse at 20% 62%, rgba(255,150,50,0.2) 0%, transparent 45%);
   }
 
   .hero-content {
@@ -288,45 +282,103 @@
   .pillar p { font-size: 0.8rem; line-height: 1.6; color: var(--muted); }
 
   /* ══════════════════════════════════════
-     TRICK OR TREAT
+     TRICK OR TREAT — Halloween night
      ══════════════════════════════════════ */
   .event {
-    background: var(--ink);
-    color: var(--cream);
+    --night: #1b1030;
+    --night-deep: #0f0820;
+    --plum: #3b1f5e;
+    --pumpkin: #f26b21;
+    --pumpkin-deep: #d24a12;
+    --candy: #ffd23f;
+    --bone: #f6efe4;
+    background: linear-gradient(180deg, var(--plum) 0%, var(--night) 45%, var(--night-deep) 100%);
+    color: var(--bone);
     position: relative; overflow: hidden;
   }
+  /* moon */
   .event::before {
     content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 15% 20%, rgba(212,150,14,0.14) 0%, transparent 55%);
+    position: absolute; top: 56px; right: 9%;
+    width: 150px; height: 150px; border-radius: 50%;
+    background: radial-gradient(circle at 40% 38%, #fff6d8 0%, #f3dfa2 55%, #d8bd77 100%);
+    box-shadow: 0 0 60px 24px rgba(255,236,180,0.18), 0 0 160px 80px rgba(255,220,140,0.08);
+    opacity: 0.95;
   }
+  /* ground glow at the bottom, like a street lit orange */
+  .event::after {
+    content: '';
+    position: absolute; left: 0; right: 0; bottom: 0; height: 40%;
+    background: radial-gradient(ellipse at 50% 100%, rgba(242,107,33,0.28) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .event-bats {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .event-bats svg {
+    position: absolute; fill: #07030f; opacity: 0.95;
+    filter: drop-shadow(0 0 6px rgba(0,0,0,0.6));
+    animation: batDrift 14s ease-in-out infinite;
+  }
+  .event-bats svg:nth-child(1) { top: 72px;  right: 11%; width: 64px; animation-duration: 13s; }
+  .event-bats svg:nth-child(2) { top: 150px; right: 8%;  width: 40px; animation-duration: 17s; animation-delay: -5s; }
+  .event-bats svg:nth-child(3) { top: 40px;  right: 22%; width: 34px; animation-duration: 15s; animation-delay: -9s; }
+  .event-bats svg:nth-child(4) { top: 210px; right: 18%; width: 52px; animation-duration: 19s; animation-delay: -3s; }
+  .event-bats svg:nth-child(5) { top: 120px; right: 30%; width: 28px; animation-duration: 16s; animation-delay: -7s; opacity: 0.7; }
+  @keyframes batDrift {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    25%  { transform: translate(-14px, -8px) rotate(-6deg); }
+    50%  { transform: translate(-28px, 4px) rotate(3deg); }
+    75%  { transform: translate(-12px, 12px) rotate(-3deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+  }
+
   .event-inner {
     display: grid; grid-template-columns: auto 1fr;
     gap: 64px; align-items: start;
     position: relative; z-index: 1;
   }
+  /* jack-o'-lantern date card */
   .event-date {
-    width: 180px; text-align: center;
-    background: linear-gradient(135deg, var(--honey), var(--terracotta));
-    border-radius: 18px; padding: 28px 16px 24px; color: white;
-    box-shadow: 0 16px 48px rgba(200,120,32,0.3);
+    width: 190px; text-align: center; position: relative;
+    background: linear-gradient(160deg, #ff8a3d 0%, var(--pumpkin) 45%, var(--pumpkin-deep) 100%);
+    border-radius: 26px; padding: 30px 16px 26px; color: var(--bone);
+    box-shadow: 0 20px 50px rgba(242,107,33,0.35), inset 0 -8px 0 rgba(120,40,0,0.18);
+  }
+  .event-date::before { /* stem */
+    content: '';
+    position: absolute; top: -16px; left: 50%; transform: translateX(-50%) rotate(-8deg);
+    width: 18px; height: 26px; border-radius: 6px 6px 3px 3px;
+    background: linear-gradient(180deg, #6f8f3e, #4d6a2a);
   }
   .event-date-month {
-    font-size: 0.7rem; letter-spacing: 0.22em;
-    text-transform: uppercase; font-weight: 700; opacity: 0.9;
+    font-size: 0.7rem; letter-spacing: 0.2em;
+    text-transform: uppercase; font-weight: 700; opacity: 0.95;
   }
   .event-date-day {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 5rem; font-weight: 700; line-height: 1;
+    font-size: 5.4rem; font-weight: 700; line-height: 1;
     font-variant-numeric: tabular-nums;
+    text-shadow: 0 3px 0 rgba(120,40,0,0.25);
   }
-  .event-date-year { font-size: 0.75rem; letter-spacing: 0.15em; opacity: 0.85; margin-top: 6px; }
+  .event-date-year { font-size: 0.75rem; letter-spacing: 0.15em; opacity: 0.9; margin-top: 4px; }
 
-  .event .eyebrow { color: var(--honey); }
-  .event .section-heading { color: var(--cream); }
-  .event .section-heading em { color: var(--honey); }
+  .event .eyebrow {
+    color: var(--candy);
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .event .eyebrow svg { width: 18px; height: 18px; }
+  .event .section-heading { color: var(--bone); }
+  .event .section-heading em.spooky {
+    font-family: 'Creepster', 'Cormorant Garamond', Georgia, serif;
+    font-style: normal; font-weight: 400;
+    font-size: 1.22em; letter-spacing: 0.02em;
+    color: var(--pumpkin);
+    text-shadow: 0 0 24px rgba(242,107,33,0.45), 0 3px 0 rgba(0,0,0,0.35);
+    display: inline-block;
+  }
   .event-lede {
-    font-size: 1.05rem; line-height: 1.7; color: rgba(250,245,235,0.8);
+    font-size: 1.05rem; line-height: 1.7; color: rgba(246,239,228,0.82);
     max-width: 56ch; margin-bottom: 28px;
   }
   .event-facts {
@@ -335,12 +387,12 @@
     margin-bottom: 32px; max-width: 720px;
   }
   .event-facts li {
-    border-top: 2px solid rgba(212,150,14,0.5);
+    border-top: 3px solid var(--pumpkin);
     padding-top: 14px;
   }
   .event-facts .label {
     display: block; font-size: 0.65rem; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--honey); font-weight: 700;
+    text-transform: uppercase; color: var(--candy); font-weight: 700;
     margin-bottom: 6px;
   }
   .event-facts .value {
@@ -349,25 +401,32 @@
   }
   .event-facts .value small {
     display: block; font-family: 'DM Sans', system-ui, sans-serif;
-    font-size: 0.75rem; font-weight: 400; color: rgba(250,245,235,0.6);
+    font-size: 0.75rem; font-weight: 400; color: rgba(246,239,228,0.6);
     margin-top: 4px;
   }
   .event-details {
     display: grid; grid-template-columns: 1fr 1fr; gap: 16px 40px;
     max-width: 720px; margin-bottom: 36px;
   }
-  .event-details p strong { color: var(--cream); font-weight: 600; }
+  .event-details p strong { color: var(--bone); font-weight: 600; }
   .event-details p {
-    font-size: 0.88rem; line-height: 1.65; color: rgba(250,245,235,0.7);
-    padding-left: 18px; position: relative;
+    font-size: 0.88rem; line-height: 1.65; color: rgba(246,239,228,0.72);
+    padding-left: 22px; position: relative;
   }
+  /* candy-corn bullet */
   .event-details p::before {
-    content: ''; position: absolute; left: 0; top: 0.55em;
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--terracotta);
+    content: ''; position: absolute; left: 0; top: 0.4em;
+    width: 0; height: 0;
+    border-left: 6px solid transparent; border-right: 6px solid transparent;
+    border-bottom: 14px solid var(--candy);
+    filter: drop-shadow(0 2px 0 var(--pumpkin));
+  }
+  .event .btn-primary {
+    background: linear-gradient(135deg, #ff8a3d, var(--pumpkin-deep));
+    box-shadow: 0 8px 28px rgba(242,107,33,0.4);
   }
   .event-note {
-    font-size: 0.8rem; color: rgba(250,245,235,0.5);
+    font-size: 0.8rem; color: rgba(246,239,228,0.5);
     margin-top: 16px; font-style: italic;
   }
 
@@ -471,8 +530,10 @@
     .about-pillars { grid-template-columns: 1fr; }
     .event-facts { grid-template-columns: 1fr; gap: 16px; }
     .event-details { grid-template-columns: 1fr; }
-    .event-date { width: 100%; display: flex; align-items: baseline; justify-content: center; gap: 12px; padding: 16px; }
+    .event-date { width: 100%; display: flex; align-items: baseline; justify-content: center; gap: 12px; padding: 18px 16px 16px; }
+    .event-date::before { display: none; }
     .event-date-day { font-size: 2.6rem; }
+    .event::before { width: 90px; height: 90px; top: 32px; right: 6%; }
     .footer-inner { grid-template-columns: 1fr; }
     footer { padding: 48px 24px 32px; }
   }
@@ -572,6 +633,13 @@
 
 <!-- ═══════════════ TRICK OR TREAT ═══════════════ -->
 <section class="event section-pad" id="trick-or-treat">
+  <div class="event-bats" aria-hidden="true">
+    <svg viewBox="0 0 64 32"><path d="M32 6c-3 0-5 3-6 6-2-4-6-6-10-6-6 0-10 4-14 9 4-1 8 0 10 3-3 1-5 3-5 6 4-2 8-2 11 1 2-3 6-5 9-5s7 2 9 5c3-3 7-3 11-1 0-3-2-5-5-6 2-3 6-4 10-3-4-5-8-9-14-9-4 0-8 2-10 6-1-3-3-6-6-6z"/></svg>
+    <svg viewBox="0 0 64 32"><path d="M32 6c-3 0-5 3-6 6-2-4-6-6-10-6-6 0-10 4-14 9 4-1 8 0 10 3-3 1-5 3-5 6 4-2 8-2 11 1 2-3 6-5 9-5s7 2 9 5c3-3 7-3 11-1 0-3-2-5-5-6 2-3 6-4 10-3-4-5-8-9-14-9-4 0-8 2-10 6-1-3-3-6-6-6z"/></svg>
+    <svg viewBox="0 0 64 32"><path d="M32 6c-3 0-5 3-6 6-2-4-6-6-10-6-6 0-10 4-14 9 4-1 8 0 10 3-3 1-5 3-5 6 4-2 8-2 11 1 2-3 6-5 9-5s7 2 9 5c3-3 7-3 11-1 0-3-2-5-5-6 2-3 6-4 10-3-4-5-8-9-14-9-4 0-8 2-10 6-1-3-3-6-6-6z"/></svg>
+    <svg viewBox="0 0 64 32"><path d="M32 6c-3 0-5 3-6 6-2-4-6-6-10-6-6 0-10 4-14 9 4-1 8 0 10 3-3 1-5 3-5 6 4-2 8-2 11 1 2-3 6-5 9-5s7 2 9 5c3-3 7-3 11-1 0-3-2-5-5-6 2-3 6-4 10-3-4-5-8-9-14-9-4 0-8 2-10 6-1-3-3-6-6-6z"/></svg>
+    <svg viewBox="0 0 64 32"><path d="M32 6c-3 0-5 3-6 6-2-4-6-6-10-6-6 0-10 4-14 9 4-1 8 0 10 3-3 1-5 3-5 6 4-2 8-2 11 1 2-3 6-5 9-5s7 2 9 5c3-3 7-3 11-1 0-3-2-5-5-6 2-3 6-4 10-3-4-5-8-9-14-9-4 0-8 2-10 6-1-3-3-6-6-6z"/></svg>
+  </div>
   <div class="container">
     <div class="event-inner">
       <div class="event-date" aria-label="Tuesday, October 20, 2026">
@@ -580,9 +648,12 @@
         <div class="event-date-year">2026</div>
       </div>
       <div>
-        <div class="eyebrow">Upcoming Event</div>
+        <div class="eyebrow">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3c.6 0 1 .4 1 1v1.1c3.9.5 7 3.4 7 7.4 0 4.7-3.6 8.5-8 8.5S4 17.2 4 12.5c0-4 3.1-6.9 7-7.4V4c0-.6.4-1 1-1zm-3.5 8.5 2 1.5-2 1.5v-3zm7 0v3l-2-1.5 2-1.5zM8.5 16.5c1 1.2 2.2 1.8 3.5 1.8s2.5-.6 3.5-1.8l-1.2-.9c-.7.7-1.5 1-2.3 1s-1.6-.3-2.3-1l-1.2.9z"/></svg>
+          Halloween on Madison
+        </div>
         <h2 class="section-heading">
-          Uptown Lakewood's <em>Trick or Treat</em>
+          Uptown Lakewood's<br><em class="spooky">Trick or Treat</em>
         </h2>
         <p class="event-lede">
           Costumes on, bags ready. Once a year the shops on Madison Avenue open their doors to the neighborhood's ghosts, goblins, and superheroes for an evening of treats on the west end.
@@ -685,7 +756,7 @@
 // Mark the hero once the photo is actually available
 const heroImg = new Image();
 heroImg.onload = () => document.getElementById('hero').classList.add('has-photo');
-heroImg.src = 'images/madison-dusk.jpg';
+heroImg.src = 'images/madison-dusk-hero.jpg';
 
 // Scroll-aware nav
 const nav = document.getElementById('mainNav');
